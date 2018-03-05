@@ -1,1 +1,13 @@
-/Users/jeffjones/dotbot-config/gitconfig
+[core]
+	editor = vim
+	excludesfile = /Users/jeffjones/.gitignore
+[user]
+	name = Jeff Jones
+	email = charles.jones@bytecubed.com
+[diff]
+	tool = vimdiff
+[alias]
+	dt = difftool
+[difftool]
+	prompt = false
+	trustExitCode = true
