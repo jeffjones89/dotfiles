@@ -19,6 +19,7 @@ Plugin 'sjl/gundo.vim' "undo tree
 Plugin 'junegunn/fzf'
 Plugin 'scrooloose/nerdcommenter' " easy commenting
 Plugin 'scrooloose/nerdtree'
+Plugin 'arcticicestudio/nord-vim'
 Plugin 'scrooloose/syntastic'	" linter
 Plugin 'vim-airline/vim-airline' "status bar
 Plugin 'vim-airline/vim-airline-themes' " airline-themes
@@ -76,8 +77,8 @@ map <leader>bd :bd<CR>
 set background=dark "color scheme declarations 23-25
 set incsearch  " search as text entered
 set hlsearch  " highlight search
-colorscheme solarized
-let g:airline_theme = 'cobalt2'
+colorscheme nord
+let g:airline_theme = 'nord'
 " remap escape key
 set number
 " show cursor

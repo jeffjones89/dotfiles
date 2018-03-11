@@ -140,6 +140,10 @@ zstyle :omz:plugins:ssh-agent identities id_rsa
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export EDITOR="vim"
 eval "$(thefuck --alias)"
+if [[ $(docker-machine status default) != "Running" ]]; then
+    echo "Starting up the default docker machine..."
+    docker-machine start default > /dev/null 2>&1
+fi
 eval "$(docker-machine env default)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
