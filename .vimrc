@@ -12,6 +12,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 "Plugins
 Plugin 'mileszs/ack.vim' "ack search
+"Plugin 'jiangmiao/auto-pairs'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'rizzatti/dash.vim'
 Plugin 'mattn/emmet-vim' "emmet for vim
@@ -19,6 +20,7 @@ Plugin 'sjl/gundo.vim' "undo tree
 Plugin 'junegunn/fzf'
 Plugin 'scrooloose/nerdcommenter' " easy commenting
 Plugin 'scrooloose/nerdtree'
+Plugin 'arcticicestudio/nord-vim' 
 Plugin 'scrooloose/syntastic'	" linter
 Plugin 'vim-airline/vim-airline' "status bar
 Plugin 'vim-airline/vim-airline-themes' " airline-themes
@@ -35,9 +37,10 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'matchit.zip' "match html tags
 Plugin 'quramy/tsuquyomi'
 Plugin 'hail2u/vim-css3-syntax'
-Plugin 'maksimr/vim-jsbeautify'
-Plugin 'groenewege/vim-less' "less indentation
 Plugin 'Quramy/vim-js-pretty-template'
+Plugin 'maksimr/vim-jsbeautify'
+Plugin 'mxw/vim-jsx'
+Plugin 'groenewege/vim-less' "less indentation
 Plugin 'marijnh/tern_for_vim'
 "Python
 Plugin 'Vimjas/vim-python-pep8-indent'
@@ -76,8 +79,8 @@ map <leader>bd :bd<CR>
 set background=dark "color scheme declarations 23-25
 set incsearch  " search as text entered
 set hlsearch  " highlight search
-colorscheme solarized
-let g:airline_theme = 'cobalt2'
+colorscheme nord
+let g:airline_theme = 'nord'
 " remap escape key
 set number
 " show cursor
@@ -122,8 +125,6 @@ endif"search settings
 
 "javascript libs
 let g:used_javascript_libs = 'underscore,angularjs, angularui,angularuirouter,jquery,d3'
-"Beautify JS template strings
-autocmd FileType javascript JsPreTmpl html
 "Beautifier mapping
 " or
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
@@ -148,6 +149,8 @@ let g:syntastic_html_tidy_ignore_errors=[
 \]
 let g:syntastic_javascript_checkers  = ['eslint']
 let g:syntastic_python_checkers = ['flake8']
+" close syntastic window 
+nnoremap <leader>lc :lclose<CR>
 
 
 let g:syntastic_always_populate_loc_list = 1
@@ -183,3 +186,8 @@ augroup filetypedetect
     au BufRead,BufNewFile *.template setfiletype html
     " associate *.template with html filetype
 augroup END
+
+if has('autocmd')
+    autocmd FileType javascript.jsx JsPreTmpl html
+    autocmd FileType javascript JsPreTmpl html
+endif
