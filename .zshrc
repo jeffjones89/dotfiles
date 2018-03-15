@@ -53,7 +53,7 @@ DEFAULT_USER="$(whoami)"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(git ssh-agent tmux)
+plugins=(git ssh-agent tmux zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -88,8 +88,12 @@ source $ZSH/oh-my-zsh.sh
 alias config='/usr/bin/git --git-dir=/Users/jeffjones/.cfg/ --work-tree=$HOME'
 alias dm-stop="docker-machine stop default"
 alias dm-up="docker-machine start default; eval '$(docker-machine env default)'"
+alias sourcezsh="source ~/.zshrc"
 alias ku="kubectl"
 alias vim="mvim -v"
+alias mux="tmuxinator"
+
+
 function tmspa {
     if [ "$1" = "up" ]; then
         if [ "$2" = "prod" ]; then
@@ -143,3 +147,5 @@ eval "$(thefuck --alias)"
 eval "$(docker-machine env default)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+bindkey '^ ' autosuggest-accept

@@ -12,7 +12,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 "Plugins
 Plugin 'mileszs/ack.vim' "ack search
-"Plugin 'jiangmiao/auto-pairs'
+Plugin 'w0rp/ale'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'rizzatti/dash.vim'
 Plugin 'mattn/emmet-vim' "emmet for vim
@@ -21,13 +21,12 @@ Plugin 'junegunn/fzf'
 Plugin 'scrooloose/nerdcommenter' " easy commenting
 Plugin 'scrooloose/nerdtree'
 Plugin 'arcticicestudio/nord-vim' 
-Plugin 'scrooloose/syntastic'	" linter
 Plugin 'vim-airline/vim-airline' "status bar
 Plugin 'vim-airline/vim-airline-themes' " airline-themes
-Plugin 'flazz/vim-colorschemes' " colorscheme package
 Plugin 'easymotion/vim-easymotion'
 Plugin 'tpope/vim-fugitive' " vim git wrapper
 Plugin 'airblade/vim-gitgutter' "git gutter
+Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-surround' " surround text with quotes
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'valloric/youcompleteme'
@@ -36,7 +35,6 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'matchit.zip' "match html tags
 Plugin 'quramy/tsuquyomi'
-Plugin 'hail2u/vim-css3-syntax'
 Plugin 'Quramy/vim-js-pretty-template'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'mxw/vim-jsx'
@@ -83,6 +81,7 @@ colorscheme nord
 let g:airline_theme = 'nord'
 " remap escape key
 set number
+set relativenumber
 " show cursor
 set cursorline
 " word wrapping
@@ -141,36 +140,18 @@ autocmd FileType less noremap <buffer> <c-f> :call CSSBeautify()<cr>
 "tab options
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
-" tell syntastic to ignore proprierty attributes i.e. ng-model
-let g:syntastic_html_tidy_ignore_errors=[
-    \'proprietary attribute "ng-',
-    \'proprietary attribute "uib-',
-    \'proprietary attribute "tooltip-'
-\]
-let g:syntastic_javascript_checkers  = ['eslint']
-let g:syntastic_python_checkers = ['flake8']
-" close syntastic window 
-nnoremap <leader>lc :lclose<CR>
-
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 "enable tab line in airline
 let g:airline#extensions#tabline#formatter = "unique_tail"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
 "close autocomplete preview window when exit insert mode
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 "backspace issues
 set backspace=2
-"typescript indentation
-let g:typescript_indent_disable=1
 "python location
-let g:ycm_python_binary_path = 'python3'
 let g:ycm_collect_identifiers_from_tags_files = 1
 " Let YCM read tags from Ctags file
 let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
@@ -191,3 +172,9 @@ if has('autocmd')
     autocmd FileType javascript.jsx JsPreTmpl html
     autocmd FileType javascript JsPreTmpl html
 endif
+
+"ale dictionary
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python':['flake8']
+\}
