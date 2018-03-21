@@ -2,6 +2,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 call plug#begin('~/.vim/plugged')
+"General Plugins
 Plug 'VundleVim/Vundle.vim'
 Plug 'mileszs/ack.vim' "ack search
 Plug 'w0rp/ale'
@@ -13,7 +14,8 @@ Plug 'junegunn/fzf'
 Plug 'scrooloose/nerdcommenter' " easy commenting
 Plug 'scrooloose/nerdtree'
 Plug 'arcticicestudio/nord-vim' 
-Plug 'vim-airline/vim-airline' "status bar
+"Plug 'vim-airline/vim-airline' "status bar
+Plug 'ap/vim-buftabline'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive' " vim git wrapper
 Plug 'airblade/vim-gitgutter' "git gutter
@@ -65,6 +67,7 @@ map <leader>bd :bd<CR>
 set background=dark "color scheme declarations 23-25
 set incsearch  " search as text entered
 set hlsearch  " highlight search
+set laststatus=2
 colorscheme nord
 let g:airline_theme = 'nord'
 " remap escape key
@@ -91,7 +94,6 @@ syntax on
 syntax enable
 set hidden " buffers can exist in background
 set showmatch " show matching parentheses
-set laststatus=2 " airline by default
 "open tree if directory opened
 autocmd StdinReadPre * let s:std_in=1
 set wildmenu " autocomplete vim commands
@@ -104,7 +106,7 @@ let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 " The Silver Searcher
 if executable('rg')
-  " Use ag over grep
+  " Use rg over grep
   set grepprg=rg\ --vimgrep\
   let g:ackprg='rg --vimgrep'
 endif"search settings
@@ -143,11 +145,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-"enable tab line in airline
-let g:airline#extensions#tabline#formatter = "unique_tail"
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_powerline_fonts = 1
 "close autocomplete preview window when exit insert mode
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_seed_identifiers_with_syntax = 1
@@ -177,6 +174,8 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python':['flake8']
 \}
-if $TMUX == ''
-    set clipboard+=unnamed
-endif
+let g:ale_open_list=1
+
+let g:buftabline_numbers = 1
+let g:buftabline_indicators=1
+let g:buftabline_separators=1
