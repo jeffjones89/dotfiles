@@ -20,6 +20,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive' " vim git wrapper
 Plug 'airblade/vim-gitgutter' "git gutter
 Plug 'pangloss/vim-javascript'
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 Plug 'tpope/vim-surround' " surround text with quotes
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'valloric/youcompleteme'
@@ -179,3 +181,39 @@ let g:ale_open_list=1
 let g:buftabline_numbers = 1
 let g:buftabline_indicators=1
 let g:buftabline_separators=1
+"gitgutter grep
+let g:gitgutter_grep='rg'
+
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_ok = "\uf00c"
+
+let g:lightline = {
+\ 'colorscheme': 'nord',
+\ 'tabline': {
+\   'left': [['buffers']],
+\   'right': [[]]
+\ },
+\ 'active': {
+\   'left': [ [ 'mode', 'paste' ],
+\             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
+\   'right': [['linter_checking', 'linter_errors',
+\              'linter_warnings', 'linter_ok']]
+\ },
+\ 'component_function': {
+\   'gitbranch': 'fugitive#head'
+\ },
+\ 'component_expand': {
+\   'linter_checking': 'lightline#ale#checking',
+\   'linter_warnings': 'lightline#ale#warnings',
+\   'linter_errors': 'lightline#ale#errors',
+\   'linter_ok': 'lightline#ale#ok',
+\ },
+\ 'component_type': {
+\   'linter_checking': 'left',
+\   'linter_warnings': 'warning',
+\   'linter_errors': 'error',
+\   'linter_ok': 'left',
+\ },
+\ }
