@@ -6,8 +6,8 @@ export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="pygmalion"
 DEFAULT_USER="$(whoami)"
+ZSH_THEME="pygmalion"
 #autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 # Uncomment the following line to use case-sensitive completion.
@@ -53,7 +53,7 @@ DEFAULT_USER="$(whoami)"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-plugins=(git ssh-agent tmux)
+plugins=(git ssh-agent tmux zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -90,6 +90,8 @@ alias dm-stop="docker-machine stop default"
 alias dm-up="docker-machine start default; eval '$(docker-machine env default)'"
 alias ku="kubectl"
 alias vim="mvim -v"
+alias mux="tmuxinator"
+
 function tmspa {
     if [ "$1" = "up" ]; then
         if [ "$2" = "prod" ]; then
@@ -147,3 +149,4 @@ fi
 eval "$(docker-machine env default)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+bindkey '^ ' autosuggest-accept

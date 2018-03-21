@@ -1,50 +1,38 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-" General Utilities
-Plugin 'VundleVim/Vundle.vim'
-"Plugins
-Plugin 'mileszs/ack.vim' "ack search
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'rizzatti/dash.vim'
-Plugin 'mattn/emmet-vim' "emmet for vim
-Plugin 'sjl/gundo.vim' "undo tree
-Plugin 'junegunn/fzf'
-Plugin 'scrooloose/nerdcommenter' " easy commenting
-Plugin 'scrooloose/nerdtree'
-Plugin 'arcticicestudio/nord-vim'
-Plugin 'scrooloose/syntastic'	" linter
-Plugin 'vim-airline/vim-airline' "status bar
-Plugin 'vim-airline/vim-airline-themes' " airline-themes
-Plugin 'flazz/vim-colorschemes' " colorscheme package
-Plugin 'easymotion/vim-easymotion'
-Plugin 'tpope/vim-fugitive' " vim git wrapper
-Plugin 'airblade/vim-gitgutter' "git gutter
-Plugin 'tpope/vim-surround' " surround text with quotes
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'valloric/youcompleteme'
+call plug#begin('~/.vim/plugged')
+Plug 'VundleVim/Vundle.vim'
+Plug 'mileszs/ack.vim' "ack search
+Plug 'w0rp/ale'
+Plug 'jiangmiao/auto-pairs'
+Plug 'rizzatti/dash.vim'
+Plug 'mattn/emmet-vim' "emmet for vim
+Plug 'sjl/gundo.vim' "undo tree
+Plug 'junegunn/fzf'
+Plug 'scrooloose/nerdcommenter' " easy commenting
+Plug 'scrooloose/nerdtree'
+Plug 'arcticicestudio/nord-vim' 
+Plug 'vim-airline/vim-airline' "status bar
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-fugitive' " vim git wrapper
+Plug 'airblade/vim-gitgutter' "git gutter
+Plug 'pangloss/vim-javascript'
+Plug 'tpope/vim-surround' " surround text with quotes
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'valloric/youcompleteme'
 " Front End Specific
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'matchit.zip' "match html tags
-Plugin 'quramy/tsuquyomi'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'maksimr/vim-jsbeautify'
-Plugin 'groenewege/vim-less' "less indentation
-Plugin 'Quramy/vim-js-pretty-template'
-Plugin 'marijnh/tern_for_vim'
+Plug 'kchmck/vim-coffee-script'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tmhedberg/matchit'
+Plug 'quramy/tsuquyomi'
+Plug 'Quramy/vim-js-pretty-template'
+Plug 'maksimr/vim-jsbeautify'
+Plug 'mxw/vim-jsx'
+Plug 'groenewege/vim-less' "less indentation
 "Python
-Plugin 'Vimjas/vim-python-pep8-indent'
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plug 'Vimjas/vim-python-pep8-indent'
+call plug#end()
 "Key Bindings
 let mapleader = "," " leader is comma
 inoremap jk <esc>
@@ -184,3 +172,11 @@ augroup filetypedetect
     au BufRead,BufNewFile *.template setfiletype html
     " associate *.template with html filetype
 augroup END
+"ale dictionary
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python':['flake8']
+\}
+if $TMUX == ''
+    set clipboard+=unnamed
+endif
