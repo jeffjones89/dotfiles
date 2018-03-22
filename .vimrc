@@ -166,19 +166,31 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python':['flake8']
 \}
-
 let g:ale_open_list=1
 
-let g:buftabline_numbers = 1
+"Buffer Line
+
+let g:buftabline_numbers = 2
 let g:buftabline_indicators=1
 let g:buftabline_separators=1
+
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(10)
+
 "gitgutter grep
 let g:gitgutter_grep='rg'
 
 let g:lightline#ale#indicator_checking = "\uf110"
 let g:lightline#ale#indicator_warnings = "\uf071"
 let g:lightline#ale#indicator_errors = "\uf05e"
-let g:lightline#ale#indicator_ok = "\uf00c"
 
 let g:lightline = {
 \ 'colorscheme': 'nord',
@@ -190,7 +202,7 @@ let g:lightline = {
 \   'left': [ [ 'mode', 'paste' ],
 \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
 \   'right': [['linter_checking', 'linter_errors',
-\              'linter_warnings', 'linter_ok']]
+\              'linter_warnings']]
 \ },
 \ 'component_function': {
 \   'gitbranch': 'fugitive#head'
@@ -199,12 +211,10 @@ let g:lightline = {
 \   'linter_checking': 'lightline#ale#checking',
 \   'linter_warnings': 'lightline#ale#warnings',
 \   'linter_errors': 'lightline#ale#errors',
-\   'linter_ok': 'lightline#ale#ok',
 \ },
 \ 'component_type': {
 \   'linter_checking': 'left',
 \   'linter_warnings': 'warning',
-\   'linter_errors': 'error',
-\   'linter_ok': 'left',
+\   'linter_errors': 'error'
 \ },
 \ }

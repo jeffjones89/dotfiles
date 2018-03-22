@@ -1,0 +1,5 @@
+font-dejavusansmono-nerd-font
+font-fira-code
+font-hack-nerd-font
+font-meslo-nerd-font
+macvim
