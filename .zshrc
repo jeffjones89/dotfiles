@@ -89,6 +89,7 @@ source $ZSH/oh-my-zsh.sh
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias dm-stop="docker-machine stop default"
 alias dm-up="docker-machine start default; eval '$(docker-machine env default)'"
+alias sourcezsh="source ~/.zshrc"
 alias ku="kubectl"
 alias vim="mvim -v"
 alias mux="tmuxinator"
@@ -150,4 +151,5 @@ fi
 eval "$(docker-machine env default)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 bindkey '^ ' autosuggest-accept

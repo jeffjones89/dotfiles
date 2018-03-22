@@ -2,6 +2,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 call plug#begin('~/.vim/plugged')
+
 "General Plugins
 Plug 'VundleVim/Vundle.vim'
 Plug 'mileszs/ack.vim' "ack search
@@ -14,12 +15,12 @@ Plug 'junegunn/fzf'
 Plug 'scrooloose/nerdcommenter' " easy commenting
 Plug 'scrooloose/nerdtree'
 Plug 'arcticicestudio/nord-vim' 
-"Plug 'vim-airline/vim-airline' "status bar
 Plug 'ap/vim-buftabline'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive' " vim git wrapper
 Plug 'airblade/vim-gitgutter' "git gutter
 Plug 'pangloss/vim-javascript'
+
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'tpope/vim-surround' " surround text with quotes
@@ -33,7 +34,6 @@ Plug 'quramy/tsuquyomi'
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'mxw/vim-jsx'
-Plug 'groenewege/vim-less' "less indentation
 "Python
 Plug 'Vimjas/vim-python-pep8-indent'
 call plug#end()
@@ -74,6 +74,7 @@ colorscheme nord
 let g:airline_theme = 'nord'
 " remap escape key
 set number
+set relativenumber
 " show cursor
 set cursorline
 " word wrapping
@@ -115,8 +116,6 @@ endif"search settings
 
 "javascript libs
 let g:used_javascript_libs = 'underscore,angularjs, angularui,angularuirouter,jquery,d3'
-"Beautify JS template strings
-autocmd FileType javascript JsPreTmpl html
 "Beautifier mapping
 " or
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
@@ -133,29 +132,13 @@ autocmd FileType less noremap <buffer> <c-f> :call CSSBeautify()<cr>
 "tab options
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
-" tell syntastic to ignore proprierty attributes i.e. ng-model
-let g:syntastic_html_tidy_ignore_errors=[
-    \'proprietary attribute "ng-',
-    \'proprietary attribute "uib-',
-    \'proprietary attribute "tooltip-'
-\]
-let g:syntastic_javascript_checkers  = ['eslint']
-let g:syntastic_python_checkers = ['flake8']
 
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 "close autocomplete preview window when exit insert mode
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 "backspace issues
 set backspace=2
-"typescript indentation
-let g:typescript_indent_disable=1
 "python location
-let g:ycm_python_binary_path = 'python3'
 let g:ycm_collect_identifiers_from_tags_files = 1
 " Let YCM read tags from Ctags file
 let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
@@ -171,11 +154,19 @@ augroup filetypedetect
     au BufRead,BufNewFile *.template setfiletype html
     " associate *.template with html filetype
 augroup END
+
+
+if has('autocmd')
+    autocmd FileType javascript.jsx JsPreTmpl html
+    autocmd FileType javascript JsPreTmpl html
+endif
+
 "ale dictionary
 let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python':['flake8']
 \}
+
 let g:ale_open_list=1
 
 let g:buftabline_numbers = 1
