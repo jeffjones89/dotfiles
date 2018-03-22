@@ -2,6 +2,8 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 call plug#begin('~/.vim/plugged')
+
+"General Plugins
 Plug 'VundleVim/Vundle.vim'
 Plug 'mileszs/ack.vim' "ack search
 Plug 'w0rp/ale'
@@ -13,11 +15,14 @@ Plug 'junegunn/fzf'
 Plug 'scrooloose/nerdcommenter' " easy commenting
 Plug 'scrooloose/nerdtree'
 Plug 'arcticicestudio/nord-vim' 
-Plug 'vim-airline/vim-airline' "status bar
+Plug 'ap/vim-buftabline'
 Plug 'easymotion/vim-easymotion'
 Plug 'tpope/vim-fugitive' " vim git wrapper
 Plug 'airblade/vim-gitgutter' "git gutter
 Plug 'pangloss/vim-javascript'
+
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 Plug 'tpope/vim-surround' " surround text with quotes
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'valloric/youcompleteme'
@@ -29,8 +34,6 @@ Plug 'quramy/tsuquyomi'
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'maksimr/vim-jsbeautify'
 Plug 'mxw/vim-jsx'
-Plug 'groenewege/vim-less' "less indentation
-Plug 'marijnh/tern_for_vim'
 "Python
 Plug 'Vimjas/vim-python-pep8-indent'
 call plug#end()
@@ -66,6 +69,7 @@ map <leader>bd :bd<CR>
 set background=dark "color scheme declarations 23-25
 set incsearch  " search as text entered
 set hlsearch  " highlight search
+set laststatus=2
 colorscheme nord
 let g:airline_theme = 'nord'
 " remap escape key
@@ -93,7 +97,6 @@ syntax on
 syntax enable
 set hidden " buffers can exist in background
 set showmatch " show matching parentheses
-set laststatus=2 " airline by default
 "open tree if directory opened
 autocmd StdinReadPre * let s:std_in=1
 set wildmenu " autocomplete vim commands
@@ -106,6 +109,7 @@ let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 " The Silver Searcher
 if executable('rg')
+  " Use rg over grep
   set grepprg=rg\ --vimgrep\
   let g:ackprg='rg --vimgrep'
 endif"search settings
@@ -128,12 +132,7 @@ autocmd FileType less noremap <buffer> <c-f> :call CSSBeautify()<cr>
 "tab options
 autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
 autocmd Filetype python setlocal tabstop=8 expandtab shiftwidth=4 softtabstop=4
-"enable tab line in airline
-let g:airline#extensions#tabline#formatter = "unique_tail"
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#ale#enabled = 1
+
 "close autocomplete preview window when exit insert mode
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_seed_identifiers_with_syntax = 1
@@ -156,6 +155,7 @@ augroup filetypedetect
     " associate *.template with html filetype
 augroup END
 
+
 if has('autocmd')
     autocmd FileType javascript.jsx JsPreTmpl html
     autocmd FileType javascript JsPreTmpl html
@@ -167,43 +167,44 @@ let g:ale_linters = {
 \   'python':['flake8']
 \}
 
-function! LinterStatus() abort
-    let l:counts = ale#statusline#Count(bufnr(''))
+let g:ale_open_list=1
 
-    let l:all_errors = l:counts.error + l:counts.style_error
-    let l:all_non_errors = l:counts.total - l:all_errors
+let g:buftabline_numbers = 1
+let g:buftabline_indicators=1
+let g:buftabline_separators=1
+"gitgutter grep
+let g:gitgutter_grep='rg'
 
-    return l:counts.total == 0 ? 'OK' : printf(
-    \   '%dW %dE',
-    \   all_non_errors,
-    \   all_errors
-    \)
-endfunction
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf071"
+let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_ok = "\uf00c"
 
-
-" Lightline Settings
-set showtabline=2
-set noshowmode
 let g:lightline = {
-      \ 'tabline': {
-      \   'left': [['buffers']],
-      \   'right': [[]]
-      \ },
-      \ 'colorscheme': 'nord',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
-      \   'right': [['ale']]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ 'component_expand': {
-      \   'ale': 'LinterStatus',
-      \   'buffers': 'lightline#bufferline#buffers'
-      \ },
-      \ 'component_type': {
-      \   'buffers': 'tabsel',
-      \   'ale': 'error'
-      \ },
-      \ }
+\ 'colorscheme': 'nord',
+\ 'tabline': {
+\   'left': [['buffers']],
+\   'right': [[]]
+\ },
+\ 'active': {
+\   'left': [ [ 'mode', 'paste' ],
+\             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ],
+\   'right': [['linter_checking', 'linter_errors',
+\              'linter_warnings', 'linter_ok']]
+\ },
+\ 'component_function': {
+\   'gitbranch': 'fugitive#head'
+\ },
+\ 'component_expand': {
+\   'linter_checking': 'lightline#ale#checking',
+\   'linter_warnings': 'lightline#ale#warnings',
+\   'linter_errors': 'lightline#ale#errors',
+\   'linter_ok': 'lightline#ale#ok',
+\ },
+\ 'component_type': {
+\   'linter_checking': 'left',
+\   'linter_warnings': 'warning',
+\   'linter_errors': 'error',
+\   'linter_ok': 'left',
+\ },
+\ }

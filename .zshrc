@@ -1,13 +1,14 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 source ~/.iterm2_shell_integration.zsh
+export TERM=xterm-256color
 
-export ZSH=/Users/jeffjones/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="pygmalion"
 DEFAULT_USER="$(whoami)"
+ZSH_THEME="pygmalion"
 #autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 # Uncomment the following line to use case-sensitive completion.
@@ -85,14 +86,13 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias config='/usr/bin/git --git-dir=/Users/jeffjones/.cfg/ --work-tree=$HOME'
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 alias dm-stop="docker-machine stop default"
 alias dm-up="docker-machine start default; eval '$(docker-machine env default)'"
 alias sourcezsh="source ~/.zshrc"
 alias ku="kubectl"
 alias vim="mvim -v"
 alias mux="tmuxinator"
-
 
 function tmspa {
     if [ "$1" = "up" ]; then
@@ -144,6 +144,10 @@ zstyle :omz:plugins:ssh-agent identities id_rsa
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export EDITOR="vim"
 eval "$(thefuck --alias)"
+if [[ $(docker-machine status default) != "Running" ]]; then
+    echo "Starting up the default docker machine..."
+    docker-machine start default > /dev/null 2>&1
+fi
 eval "$(docker-machine env default)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
